@@ -1,0 +1,9 @@
+#Node Modules Directory
+/node_modules/
+
+#Production Folder
+/dist/
+
+#SASS
+.sass-cache/
+*.css.map
