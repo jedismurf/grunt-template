@@ -7,6 +7,9 @@ module.exports = function(grunt){
             buildDirectory: 'build',
             productionDirectory: 'dist'
         },
+        clean: {
+            dist: ['<%= config.productionDirectory %>']
+        },
         jshint: {
             all: [ // Run jshint check on these files
                 'gruntfile.js', 
@@ -75,6 +78,7 @@ module.exports = function(grunt){
                     '<%= config.buildDirectory %>/css/*.scss'
                 ],
                 tasks: [ // Then run these tasks if one of the files being watched changes
+                    'clean',
                     'jshint',
                     'concat',
                     'uglify',
@@ -86,15 +90,16 @@ module.exports = function(grunt){
         },
     });
 
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('dist', 'Compile all the files for production', ['concat', 'uglify', 'sass', 'cssmin','htmlmin']);
+    grunt.registerTask('dist', 'Compile all the files for production', ['clean', 'concat', 'uglify', 'sass', 'cssmin','htmlmin']);
 
     grunt.registerTask('default', 'The default tasks to run', ['watch']);
 };
